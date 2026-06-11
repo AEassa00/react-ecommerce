@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import ProductContext from '../context/cearteContext'
-import {Button} from '@mui/material'
+
 import AlertAddToCart from "../other/Alert";
 import FavriteIcon from '@mui/icons-material/Favorite'
 
@@ -10,7 +10,7 @@ function Protucts() {
   
 
 
- const {product,setproduct,showAlert,setShowAlert,handleShow,handlefavorite}=useContext(ProductContext)
+ const {product,showAlert,handleShow,handlefavorite}=useContext(ProductContext)
 
  
  
@@ -58,7 +58,8 @@ function Protucts() {
            style={{ height: "30px" }}
          >{`${pro.title.slice(0, 15)}....`}</h5>
          <div className="d-flex justify-content-center align-items-center h-50 ">
-           <img src={pro.image} className="card-img-top w-50 "></img>
+           <img src={pro.image} className="card-img-top w-50 " alt={pro.title}></img>
+           
          </div>
 
          <p className="card-text  ">{`${pro.description.slice(0, 40)}....`}</p>
@@ -90,11 +91,11 @@ function Protucts() {
   return (
     <div className='container' style={{display:"flex" ,flexWrap:"wrap"}}>
     {list}
-    {showAlert.cart==true?
+    {showAlert.cart===true?
     <div className=' position-fixed bottom-0 end-0 m-4' >
       <AlertAddToCart massage={"add to cart"} />
       </div>:""}
-    {showAlert.favorite==true?
+    {showAlert.favorite===true?
     <div className=' position-fixed bottom-0 end-0 m-4' >
       <AlertAddToCart massage={"add to favorite"} />
       </div>:""}
