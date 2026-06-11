@@ -2,9 +2,9 @@ import { Route, Routes } from "react-router-dom";
 import Nav from "./pages/Nav";
 import Footer from "./pages/Footer";
 import Protucts from "./pages/Protucts";
-import { useContext, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import ProductContext from "./context/cearteContext";
-import {v4 as uuidv4} from 'uuid';
+
 import Productdetails from './pages/Productdetails';
 import Cart from "./pages/Cart";
 import Favorites from "./pages/Favorites";
@@ -37,7 +37,7 @@ function App() {
 
   function handleShow(id){
      
-    const addstorage=product.map((i)=>i.id==id?{...i,cart:true,quantiy:(i.quantiy||0)+1}:i)
+    const addstorage=product.map((i)=>i.id===id?{...i,cart:true,quantiy:(i.quantiy||0)+1}:i)
     
     setproduct(addstorage)
     localStorage.setItem("products",JSON.stringify(addstorage))
@@ -51,7 +51,7 @@ function App() {
 
    function handlefavorite(id){
     
-    const addfavorite=product.map((e)=>e.id==id?{...e,favorite:!e.favorite}:e)
+    const addfavorite=product.map((e)=>e.id===id?{...e,favorite:!e.favorite}:e)
     setproduct(addfavorite)
     localStorage.setItem("products",JSON.stringify(addfavorite))
 

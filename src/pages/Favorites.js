@@ -5,7 +5,7 @@ import FavriteIcon from "@mui/icons-material/Favorite";
 import AlertAddToCart from "../other/Alert";
 
 export default function Favorites() {
-  const { product, setproduct, handleShow, handlefavorite, showAlert } =
+  const { product, handleShow, handlefavorite, showAlert } =
     useContext(ProductContext);
 
   const listfavorite = product.filter((e) => e.favorite === true);
@@ -59,7 +59,7 @@ export default function Favorites() {
     <>
       <div className="container ">
         {lfavorite}
-        {showAlert == true ? (
+        {showAlert === true ? (
           <div className=" position-fixed bottom-0 end-0 m-4">
             <AlertAddToCart />
           </div>

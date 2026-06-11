@@ -38,7 +38,7 @@ const {product,setShowAlert,setproduct }=useContext(ProductContext)
     <>
     <div className='d-flex justify-content-center justify-content-evenly h-100'>
         <div style={{height:"500px"}} className=' border border-5  w-50  m-5'>
-          <img ></img>the photttos
+          the photttos
         </div>
         <div className='border border-danger border-5 w-50  m-5 p-3 position-relative' >
           <h1 className='text-center ' >Name: {dataProduct.name}</h1>
