@@ -2,3 +2,37 @@
 
 
 
+.icon,.iconi,.iconw {
+  font-size: 1.5rem;
+  color: #413f3f;
+  cursor: pointer;
+}
+.icon:hover {
+  color: #007bff;
+  /* transform: rotateY(360deg); */
+  transition: all 0.3s ease;
+}
+.iconi:hover {
+  background: linear-gradient(
+    45deg,
+    #833AB4,
+    #C13584,
+    #E1306C,
+    #F56040,
+    #FCAF45
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* transform: rotateX(360deg); */
+  transition: all 0.3s ease;
+}
+.iconw:hover {
+  color: #28a745;
+  /* transform: rotateY(360deg); */
+  transition: all 0.3s ease;
+}
+a{
+  text-decoration: none;
+  color: white;
+}

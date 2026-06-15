@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import ProductContext from "../context/cearteContext";
 
 export default function Cart() {
-  const { product, setproduct } = useContext(ProductContext);
+  const { product, setproduct} = useContext(ProductContext);
 
   console.log(product);
 
@@ -14,8 +14,10 @@ export default function Cart() {
 
     setproduct(prev);
     localStorage.setItem("products", JSON.stringify(prev));
+
   }
-  const list = product.map((e) => (e.cart === true ? e.price * e.quantiy : 0));
+
+  const list = product.filter((e) => e.cart === true).map((e) => e.price * e.quantiy);
   console.log(list);
 
   const total = list.reduce((acc, item) => acc + item, 0);
@@ -39,7 +41,7 @@ export default function Cart() {
         ? {
             ...i,
             quantiy: i.quantiy + 1,
-            // cart: i.quantiy === 1 ? false : true,
+            
           }
         : i,
     );
@@ -88,32 +90,35 @@ export default function Cart() {
   
 if (countCart  > 0) {
   return (
-   
     <div
-      className=" container mt-5 position-relative "
-      style={{ minHeight: "80vh" }}
+      className=" container-fluid mt-5 position-relative "
+      style={{ minHeight: "80vh"}}
     >
       <h1 className="d-flex justify-content-center">Cart</h1>
-      <table className="col-12 container text-center table table-bordered mb-5">
+      <div style={{ overflowX: "auto" }}>
+      <table
+        className="col-12 container text-center table table-bordered mb-5"
+        style={{ minWidth: "720px" }}
+      >
         <thead>
           <tr>
             <th>M</th>
             <th className="col-5">name</th>
 
             <th>price</th>
-            <th>Quantity</th>
+            <th className="col-2">Quantity</th>
             <th>Subtotal</th>
-            <th className="col-2">Delete</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>{table}</tbody>
       </table>
-
+</div>
       <div className="position-absolute bottom-0 end-0   ">
         <h1 className="m-0">Total price : {total.toFixed(2)} $</h1>
       </div>
     </div>
-  )
+  );
 } else {
     return (
       <div
@@ -121,7 +126,9 @@ if (countCart  > 0) {
         style={{ minHeight: "80vh" }}
       >
         <h1 className="d-flex justify-content-center">Cart</h1>
-        <p className="text-center">Your cart is empty.</p>
+        
+        <p className=" text-center vh-100">No products found in the cart.</p>
+       
       </div>
     );
     }

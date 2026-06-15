@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import ProductContext from "../context/cearteContext";
 import { Link } from "react-router-dom";
-import FavriteIcon from "@mui/icons-material/Favorite";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import AlertAddToCart from "../other/Alert";
 
 export default function Favorites() {
-  const { product, handleShow, handlefavorite, showAlert } =
+  const { product, handleShow, handlefavorite, showAlert, removeAlert } =
     useContext(ProductContext);
 
   const listfavorite = product.filter((e) => e.favorite === true);
@@ -41,15 +41,12 @@ export default function Favorites() {
             className=" rounded-circle p-0 text-white text-center bg-success col  m-1"
             onClick={() => handleShow(e.id)}
           >
-            <i class="bi bi-cart"></i>
+            <i className="bi bi-cart"></i>
           </Link>
-          <FavriteIcon
-            className="col btn w-25 h-25  m-1"
+          <DeleteForeverIcon
+            className="col btn w-25 h-25  m-1 text-danger"
             onClick={() => handlefavorite(e.id)}
-            color="error"
-
           />
-         
         </div>
       </div>
     );
@@ -57,11 +54,23 @@ export default function Favorites() {
 
   return (
     <>
-      <div className="container ">
-        {lfavorite}
-        {showAlert === true ? (
+      <div className="container mt-5" style={{ minHeight: "100vh" }}>
+        <h1 className="text-center mb-3">Favorite Products</h1>
+        {lfavorite.length > 0 ? 
+          lfavorite
+         : (
+          <p className=" text-center vh-100">No favorite products found.</p>
+        )}
+        {showAlert.cart === true ? 
           <div className=" position-fixed bottom-0 end-0 m-4">
-            <AlertAddToCart />
+            <AlertAddToCart massage={"add to cart"}/>
+          </div>
+        : 
+          ""
+        }
+        {removeAlert.favorite === true ? (
+          <div className=" position-fixed bottom-0 end-0 m-4">
+            <AlertAddToCart massage={"remove from favorite"} />
           </div>
         ) : (
           ""

@@ -14,6 +14,7 @@ import Favorites from "./pages/Favorites";
 function App() {
   
   const [showAlert,setShowAlert]=useState({cart:false,favorite:false});
+  const [removeAlert,setRemoveAlert]=useState({cart:false,favorite:false});
 
 
 
@@ -42,11 +43,25 @@ function App() {
     setproduct(addstorage)
     localStorage.setItem("products",JSON.stringify(addstorage))
     
-    
-    setShowAlert({showAlert,cart:true})
-    setTimeout(() => {
-    setShowAlert({showAlert,cart:false})
-   }, 2000);
+    addstorage.forEach((e) => {
+      if (e.id === id) {
+        if (e.cart === true) {
+          setShowAlert({ showAlert, cart: true });
+          setTimeout(() => {
+            setShowAlert({ showAlert, cart: false });
+          }, 2000);
+        } else {
+          setRemoveAlert({ removeAlert, cart: true });
+          setTimeout(() => {
+            setRemoveAlert({ removeAlert, cart: false });
+          }, 2000);
+        }
+      }
+    });
+  //   setShowAlert({showAlert,cart:true})
+  //   setTimeout(() => {
+  //   setShowAlert({showAlert,cart:false})
+  //  }, 2000);
    }
 
    function handlefavorite(id){
@@ -58,12 +73,36 @@ function App() {
     const infavorite=addfavorite.filter((e)=>e.favorite===true)
     console.log(infavorite);
     
-    
-     setShowAlert({showAlert,favorite:true})
+    addfavorite.forEach((e)=>{
+      if(e.id===id){
+        if(e.favorite===true){
+          setShowAlert({showAlert,favorite:true})
+          setTimeout(() => {
+            setShowAlert({showAlert,favorite:false})
+           }, 2000);
+        }
+        else{
+          setRemoveAlert({removeAlert,favorite:true})
+          setTimeout(() => {
+            setRemoveAlert({removeAlert,favorite:false})
+           }, 2000);
+        }
+      }
+    })
+    //  if(showAlert.favorite===false){
+    //   setShowAlert({showAlert,favorite:true})
+    //   setTimeout(() => {
+    //     setShowAlert({showAlert,favorite:false})
+    //    }, 2000);
+    //  }
+    //  else{
+    //   setRemoveAlert({removeAlert,favorite:true})
+    //   setTimeout(() => {
+    //     setRemoveAlert({removeAlert,favorite:false})
+    //    }, 2000);
+    //  }
+     
 
-    setTimeout(() => {
-    setShowAlert({showAlert,favorite:false})
-   }, 2000);
   
     
    }
@@ -80,6 +119,8 @@ function App() {
         setShowAlert,
         handleShow,
         handlefavorite,
+        removeAlert,
+        setRemoveAlert,
       }}
     >
       <div className="App d-flex flex-column justify-content-between" style={{ minHeight: "" }}>
