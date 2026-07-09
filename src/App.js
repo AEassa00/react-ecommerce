@@ -1,13 +1,10 @@
-import { Route, Routes } from "react-router-dom";
-import Nav from "./pages/Nav";
-import Footer from "./pages/Footer";
-import Protucts from "./pages/Protucts";
+
+
 import {  useEffect, useState } from "react";
 import ProductContext from "./context/cearteContext";
 
-import Productdetails from './pages/Productdetails';
-import Cart from "./pages/Cart";
-import Favorites from "./pages/Favorites";
+
+import AppRoutes from "./routes/AppRoutes";
 
 
 
@@ -15,8 +12,9 @@ function App() {
   
   const [showAlert,setShowAlert]=useState({cart:false,favorite:false});
   const [removeAlert,setRemoveAlert]=useState({cart:false,favorite:false});
+  const [search,setSearch]= useState("")
 
-
+console.log(search)
 
   const [product,setproduct]=useState([])
 
@@ -89,23 +87,22 @@ function App() {
         }
       }
     })
-    //  if(showAlert.favorite===false){
-    //   setShowAlert({showAlert,favorite:true})
-    //   setTimeout(() => {
-    //     setShowAlert({showAlert,favorite:false})
-    //    }, 2000);
-    //  }
-    //  else{
-    //   setRemoveAlert({removeAlert,favorite:true})
-    //   setTimeout(() => {
-    //     setRemoveAlert({removeAlert,favorite:false})
-    //    }, 2000);
-    //  }
-     
-
-  
     
-   }
+
+    
+    
+    
+    
+  }
+  function handleDeleteAll(id) {
+      const prev = product.map((i) =>
+        i.id === id ? { ...i, cart: false, quantiy: 0 } : i,
+      );
+  
+      setproduct(prev);
+      localStorage.setItem("products", JSON.stringify(prev));
+  
+    }
   
   
 
@@ -121,29 +118,20 @@ function App() {
         handlefavorite,
         removeAlert,
         setRemoveAlert,
+        search,
+        setSearch,
+        handleDeleteAll,
       }}
+      
     >
-      <div className="App d-flex flex-column justify-content-between" style={{ minHeight: "" }}>
-        <Nav  />
+      <div
+        className="App  d-flex flex-column justify-content-between"
+        style={{ minHeight: "" }}
+      >
+        {/* <Nav  /> */}
 
-        <Routes>
-          <Route path="/" element={<>home</>}>
-            {" "}
-          </Route>
-          <Route path="/Products" element={<Protucts />}>
-            {" "}
-          </Route>
-          <Route path="/Cart" element={<Cart />}>
-            {" "}
-          </Route>
-          <Route path="/Favorites" element={<Favorites />}>
-            {" "}
-          </Route>
-          <Route path="/Products/:id" element={<Productdetails />}>
-            {" "}
-          </Route>
-        </Routes>
-        <Footer/>
+        <AppRoutes />
+        {/* <Footer/> */}
       </div>
     </ProductContext.Provider>
   );

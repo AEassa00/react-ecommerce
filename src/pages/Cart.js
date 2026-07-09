@@ -1,6 +1,7 @@
-// import '../css/style.css'
 import React, { useContext } from "react";
 import ProductContext from "../context/cearteContext";
+
+
 
 export default function Cart() {
   const { product, setproduct} = useContext(ProductContext);
@@ -16,6 +17,8 @@ export default function Cart() {
     localStorage.setItem("products", JSON.stringify(prev));
 
   }
+
+
 
   const list = product.filter((e) => e.cart === true).map((e) => e.price * e.quantiy);
   console.log(list);
@@ -59,24 +62,26 @@ export default function Cart() {
 
         <td >{e.price} $</td>
         <td>
+          <div className='d-flex justify-content-center' >
           <button
-            className="btn btn-danger px-2 py-0 mx-1 my-2"
+            className="btn fonts text-danger "
             onClick={() => handleDelete(e.id)}
           >
             -
           </button>
-          <span className="p-2">{e.quantiy}</span>
+          <p className="p-2 mb-0 w-25 align-self-center">{e.quantiy}</p>
           <button
-            className="btn btn-success px-2 py-0 mx-1 my-2"
+            className="btn fonts text-success "
             onClick={() => handleAdd(e.id)}
           >
             +
           </button>
+          </div>
         </td>
         <td>{(e.price * e.quantiy).toFixed(2)} $</td>
         <td>
           <button
-            className="btn btn-secondary px-2 py-0 mx-1 my-2"
+            className="btn  px-2 py-0 mx-1 my-2"
             onClick={() => handleDeleteAll(e.id)}
           >
             <i className="bi bi-trash-fill text-danger"></i>

@@ -1,14 +1,28 @@
-import React, { useContext } from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import React, { useContext } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import { Link } from 'react-router-dom'
-import ProtuctContext from '../context/cearteContext'
-import FavriteIcon from '@mui/icons-material/Favorite'
+import { Link } from "react-router-dom";
+import ProtuctContext from "../context/cearteContext";
+import FavriteIcon from "@mui/icons-material/Favorite";
 function Nav() {
-const {product}=useContext(ProtuctContext)
+  const { product, search, setSearch, setproduct } = useContext(ProtuctContext);
 
-const countCart=product.filter((e)=>e.cart===true)
-const countfavorite=product.filter((e)=>e.favorite===true)
+  const countCart = product.filter((e) => e.cart === true);
+  const countfavorite = product.filter((e) => e.favorite === true);
+
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+  function logout() {
+    localStorage.removeItem("currentUser");
+    window.location = "/"; // Redirect to home page
+
+    const prev = product.map((i) => ({ ...i, cart: false, quantiy: 0, favorite: false }));
+    setproduct(prev);
+    localStorage.setItem("products", JSON.stringify(prev));
+
+  }
+
+
 
 
 
@@ -60,21 +74,40 @@ const countfavorite=product.filter((e)=>e.favorite===true)
               </Link>
             </li>
           </ul>
-        <form className="d-flex" role="search">
-          <input
-            className="form-control me-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
-          <button className="btn btn-outline-success" type="submit">
-            Search
-          </button>
-        </form>
+          <Link to="/Search">
+            <form className="d-flex" role="search">
+              <input
+                value={search}
+                className="form-control me-2"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              
+            </form>
+          </Link>
+
+          {!currentUser ? (
+            <div className="d-flex col-xl-2 col-md-3  mt-xl-0 mt-lg-0 mt-3 gap-2 ">
+              <Link to="/Signin" className="btn btn-outline-success ">
+                Sign in
+              </Link>
+              <Link to="/Login" className="btn btn-outline-success ">
+                Log in
+              </Link>
+            </div>
+          ) : (
+            <div className="d-flex col-1">
+              <Link onClick={logout} className="btn btn-outline-success">
+                Log out
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </nav>
   );
 }
 
-export default Nav
+export default Nav;

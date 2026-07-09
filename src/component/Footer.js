@@ -1,7 +1,9 @@
 import React from "react";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { Link } from "react-router-dom";
-import "../css/style.css";
+import "../css/style.css"
+
+
 
 export default function Footer() {
   return (
@@ -27,7 +29,7 @@ export default function Footer() {
                 </i>
               </a>
             </div>
-            <div className="group-icon d-flex justify-content-start align-items-center gap-3 mt-3">
+            <div className="group-icon  d-flex justify-content-start align-items-center gap-3 mt-3">
               <a
                 href="https://www.facebook.com/share/1CffeTmnhq/"
                 target="_blank"

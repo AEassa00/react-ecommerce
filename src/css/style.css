@@ -1,5 +1,8 @@
 
+body{
+  background-color: #d1dba4 ;
 
+}
 
 
 .icon,.iconi,.iconw {
@@ -32,7 +35,30 @@
   /* transform: rotateY(360deg); */
   transition: all 0.3s ease;
 }
+
 a{
-  text-decoration: none;
-  color: white;
+  text-decoration: none !important;
+  
 }
+.contact a{
+  color:white !important;
+}
+
+.hover:hover{
+ transform: scale(1.01);
+ transition: .3s;
+ background-color: #e4f5b6 ;
+
+}
+.hover{
+  background-color: #eff8bd ;
+}
+
+
+.fonts{
+  font-size: 30px ;
+  font-weight: 900 ;
+  border: none 
+}
+
+
