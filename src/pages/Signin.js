@@ -1,6 +1,7 @@
 import { Button, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+// import "../css/style.css"
 
 
 export default function Signin() {
@@ -15,7 +16,7 @@ export default function Signin() {
   const [accept, setAccept] = useState(false);
   const [errors, setErrors] = useState(false);
 
-  console.log("input==>", input);
+  console.log("input==>", errors);
 
   useEffect(() => {
     const saved = localStorage.getItem("users");
@@ -27,7 +28,7 @@ export default function Signin() {
   function submit(e) {
     const too = users.find((e) => e.email === input.email);
     console.log(too);
-    setErrors(!too && accept && true);
+    setErrors(too && accept &&  true );
 
     e.preventDefault();
 
@@ -57,60 +58,66 @@ export default function Signin() {
       <h6 style={{ marginBottom: "-12px" }}>Abdallah</h6>
       <p className="m-0">commerce</p>
       <h1>sign in</h1>
-      <form className="d-flex gap-2 flex-column w-50" onSubmit={submit}>
-        <label>Name</label>
+      <form className="d-flex  flex-column w-50" onSubmit={submit}>
+        {/* <label>Name</label> */}
         <TextField
+          className="input-field"
+          label="Name"
           value={input.name}
           onChange={(e) => setInput({ ...input, name: e.target.value })}
           type="text"
-          placeholder="Name"
+          
         />
         {input.name === "" && accept && (
-          <span className="text-danger">Name is required</span>
+          <span className="text-danger ">Name is required</span>
         )}
-        <label>User name</label>
+        {/* <label>User name</label> */}
         <TextField
+          className="input-field"
+          label="User name"
           value={input.user}
           onChange={(e) => setInput({ ...input, user: e.target.value })}
-          placeholder="User name"
         />
         {input.user === "" && accept && (
           <span className="text-danger">User name is required</span>
         )}
-        <label>Email</label>
+        {/* <label>Email</label> */}
         <TextField
+          className="input-field"
+          label="Email"
           value={input.email}
           onChange={(e) => setInput({ ...input, email: e.target.value })}
           type="email"
-          placeholder="Email"
         />
         {input.email === "" && accept && (
           <span className="text-danger">Email is required</span>
         )}
-        
-        <label>Password</label>
+        {errors&& <span className="text-danger">Email is repeated</span>}
+        {/* <label>Password</label> */}
         <TextField
+          className="input-field"
+          label="Password"
           value={input.password}
           onChange={(e) => setInput({ ...input, password: e.target.value })}
           type="password"
-          placeholder="Password"
         />
         {input.password.length < 6 && accept && (
           <span className="text-danger">
             Password must be at least 6 characters
           </span>
         )}
-        <label>confirm Password</label>
+        {/* <label>confirm Password</label> */}
         <TextField
+          className="input-field"
+          label="Confirm Password"
           value={confirm}
           onChange={(e) => setConfirm(e.target.value)}
           type="password"
-          placeholder="Confirm Password"
         />
         {confirm !== input.password && accept && (
           <span className="text-danger">Password does not match</span>
         )}
-        <Button type="submit" variant="contained">
+        <Button type="submit" variant="contained" className="bg-success mt-5">
           {" "}
           register
         </Button>

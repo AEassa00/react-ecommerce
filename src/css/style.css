@@ -1,6 +1,6 @@
 
 body{
-  background-color: #d1dba4 ;
+  Background: #F8FAFC;
 
 }
 
@@ -47,18 +47,72 @@ a{
 .hover:hover{
  transform: scale(1.01);
  transition: .3s;
- background-color: #e4f5b6 ;
+ /* background-color: #e4f5b6 ; */
 
 }
-.hover{
-  background-color: #eff8bd ;
+.hover, .light{
+  background-color: #FFFFFF ;
 }
 
 
 .fonts{
-  font-size: 30px ;
-  font-weight: 900 ;
-  border: none 
+  font-size: 30px !important;
+  font-weight: 900 !important;
+  border: none !important 
+}
+
+.input-field div{
+  margin-top: 20px;
+}
+
+.input-field div input{
+  
+  
+  
+  border:none ;
+  padding: 12px ;
+}
+.input-field .Mui-focused fieldset{
+  border: 1px solid #a9a4a4 !important;
+  
+  
+ 
+  
+}
+.input-field :hover fieldset{
+  border: 1px solid #a9a4a4 !important;
+  
+  
+ 
+  
+}
+.input-field label{
+  color: #928d8d !important;
+  translate: 0px -5px ;
+  margin-top: 20px;
+  
+
 }
 
 
+
+.overflow{
+  
+   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bot{
+  border:none;
+  background-color: transparent;
+  font-weight: 600;
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+.bot:hover{
+  background-color: #7d7a7a4e;
+}
+.bot:active{
+  background-color: #9c9898;
+}

@@ -11,7 +11,7 @@ function Protucts() {
   
 
 
- const {product,showAlert,handleShow,handlefavorite,removeAlert,handleDeleteAll}=useContext(ProductContext)
+ const {product,showAlert,handleShow,handlefavorite,removeAlert,handleDelete,handleAdd}=useContext(ProductContext)
 
  
  
@@ -22,55 +22,93 @@ function Protucts() {
    
    return (
      <div
-       className="card position-relative hover shadow-lg "
+       className="card position-relative hover "
        key={pro.id}
        style={{ width: "16rem", margin: "10px", height: "400px" }}
-         >
-       
-         <Link to={`${pro.id}`}  className="card-body container">
-         <h5 className="card-title m-0"
+     >
+       <Link to={`${pro.id}`} className="card-body container">
+         <h5
+           className="card-title overflow m-0"
            style={{ height: "30px" }}
-         >{`${pro.title.slice(0, 15)}....`}</h5>
-         <div className="d-flex justify-content-center align-items-center h-50 ">
+         >{`${pro.title}`}</h5>
+         <div className="d-flex justify-content-center align-items-center  ">
            <img
-             src={pro.image}
-             className="card-img-top w-50 "
+             src={pro.thumbnail}
+             className="card-img-top "
              alt={pro.title}
            ></img>
          </div>
 
-         <p className="card-text  ">{`${pro.description.slice(0, 40)}....`}</p>
+         <p className="card-text overflow ">{`${pro.description}`}</p>
 
-         <div   className="d-flex justify-content-around align-items-center ">
+         <div className="d-flex justify-content-around align-items-center ">
            <span className="bg-warning p-1 rounded-3  ">{pro.price}</span>
-           
          </div>
-             
-           </Link>
-         <div className="d-flex justify-content-around position-absolute bottom-0 w-100  mb-2">
-           {pro.favorite ? (
-             <FavriteIcon style={{height:"60px " , width:"60px"}}
-               className={`btn ${pro.favorite ? "text-danger" : " text-dark "}   `}
-               onClick={(e) => {e.stopPropagation(); e.preventDefault(); handlefavorite(pro.id)}}
-             />
-           ) : (
-             <i style={{height:"60px " , width:"60px" , fontSize:"30px"}} 
-               className={` bi bi-heart icons btn  `}
-               onClick={(e) => {e.stopPropagation(); e.preventDefault(); handlefavorite(pro.id)}}
-             ></i>
-           )}
-           {pro.cart?  <Link className='btn ' onClick={() => handleDeleteAll(pro.id)}>
-           <i className='bi bi-cart-check-fill text-success' style={{height:"60px " , width:"60px" , fontSize:"30px"}}  ></i>
- </Link>:
+       </Link>
+       <div className="d-flex  justify-content-around position-absolute bottom-0 align-items-center w-100  mb-2">
+         {pro.favorite ? (
+           <FavriteIcon
+             style={{ height: "60px ", width: "60px" }}
+             className={`btn ${pro.favorite ? "text-danger" : " text-dark "}   `}
+             onClick={(e) => {
+               e.stopPropagation();
+               e.preventDefault();
+               handlefavorite(pro.id);
+             }}
+           />
+         ) : (
+           <i
+             style={{ height: "60px ", width: "60px", fontSize: "30px" }}
+             className={` bi bi-heart icons btn  `}
+             onClick={(e) => {
+               e.stopPropagation();
+               e.preventDefault();
+               handlefavorite(pro.id);
+             }}
+           ></i>
+         )}
+         {pro.cart ? (
+           <div
+             className="light  d-flex justify-content-evenly align-items-center rounded-5 p-1"
+             style={{ width: "100px", height: "35px" }}
+           >
+             {pro.quantiy === 1 ? (
+               <button
+                 className="btn  p-0"
+                 onClick={() => handleDelete(pro.id)}
+               >
+                 <i className="bi bi-trash-fill text-danger"></i>
+               </button>
+             ) : (
+               <button
+                 className="bot rounded-circle text-danger"
+                 onClick={() => handleDelete(pro.id)}
+               >
+                 -
+               </button>
+             )}
+             <span>{pro.quantiy}</span>
+
+             <button
+               className="bot rounded-circle  text-success"
+               onClick={() => handleAdd(pro.id)}
+             >
+               +
+             </button>
+           </div>
+         ) : (
            <Link
-             className=" btn  "
+             className=" btn text-dark light rounded-5"
              onClick={() => handleShow(pro.id)}
            >
-             <i className='bi bi-cart-check' style={{height:"60px " , width:"60px" , fontSize:"30px"}}  ></i>
-           </Link>}
-         </div>
+             <i
+               className="bi bi-cart-check"
+               style={{ height: "60px ", width: "60px", fontSize: "30px" }}
+             ></i>
+           </Link>
+         )}
        </div>
-     
+     </div>
    );});
 
 

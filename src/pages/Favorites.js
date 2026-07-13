@@ -24,17 +24,17 @@ export default function Favorites() {
           <img
             className="col-1"
             style={{ width: "100px", height: "100px", objectFit: "contain" }}
-            src={e.image}
+            src={e.thumbnail}
             alt={e.title}
           />
           <div className="col ">
             <h2>{e.title}</h2>
             {/* <p className='card-text'>{}</p> */}
 
-            <div className=" ">
+          </div>
+            <div className=" col">
               <span className="bg-warning p-1 rounded-3 ">{e.price} $</span>
             </div>
-          </div>
         </Link>
         <div className="col-2 row h-100 align-items-center ">
           <Link

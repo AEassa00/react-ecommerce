@@ -1,16 +1,25 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import ProductContext from "../context/cearteContext";
 import { useParams } from "react-router-dom";
 import { Link } from "@mui/material";
 import AlertAddToCart from "../other/Alert";
 import FavriteIcon from "@mui/icons-material/Favorite";
-
+import Rating from "@mui/material/Rating";
 
 
 
 export default function Productdetails() {
-  const { product, handleShow, showAlert, handlefavorite, removeAlert, handleDeleteAll } =
-    useContext(ProductContext);
+  const [photo, setPhoto] = useState();
+
+  const {
+    product,
+    handleShow,
+    showAlert,
+    handlefavorite,
+    removeAlert,
+    handleDelete,
+    handleAdd
+  } = useContext(ProductContext);
 
   console.log(product);
   const { id } = useParams();
@@ -19,27 +28,86 @@ export default function Productdetails() {
   console.log(dataProduct);
 
   return (
-    
-      <div className="row  h-100 d-flex justify-content-center align-items-center">
-        <div style={{ height: "500px" }} className="   m-5">
-          <div className="h-100 bg-secondary col-5 d-flex justify-content-center align-items-center">
-            <img width="400px" height="90%" src={dataProduct.image} alt="" />
-          </div>
+    <div className="container h-100 my-5 mx-auto  d-flex justify-content-center row align-items-center">
+      <div
+        style={{ height: "500px" }}
+        className=" justify-content-center gap-4 col-lx col-lg col-md-10 my-5 mx-auto  "
+      >
+        <div className=" w-100 rounded h-75 light col-5 d-flex justify-content-center align-items-center shadow">
+          <img width="80%" src={photo || dataProduct.thumbnail} alt="" />
         </div>
-        <div className="border border-danger border-5 w-50  m-5 p-3 position-relative col-4">
-          <h5 className="text-center ">Name: {dataProduct.title}</h5>
-          {dataProduct.cart ? (
-            <Link
-              className="btn "
-              onClick={() => handleDeleteAll(dataProduct.id)}
+        <div className=" d-flex  justify-content-evenly align-items-start w-100">
+          {dataProduct.images?.map((img) => (
+            <div
+              key={img}
+              className=" w-25 h-100 light shadow p-2 rounded m-2"
+              onClick={() => setPhoto(img)}
             >
-              <i
-                className="bi bi-cart-check-fill text-success"
-                style={{ height: "60px ", width: "60px", fontSize: "30px" }}
-              ></i>
-            </Link>
+              <img src={img} width="100%" alt="" />
+            </div>
+          ))}
+        </div>
+      </div>
+      <div
+        className="     position-relative col-md-10 col-lg gap-3 "
+        style={{ height: "500px" }}
+      >
+        <h1 className=""> {dataProduct.title}</h1>
+        <h6> {dataProduct.price} $</h6>
+
+        <Rating
+          name="read-only"
+          value={Number(dataProduct.rating)}
+          readOnly
+          precision={0.5}
+        />
+
+        <p>Details: {dataProduct.description}</p>
+
+        <div className="d-flex justify-content-around align-items-center mt-5 w-100  ">
+          {dataProduct.cart ? (
+            // <Link
+            //   className="btn light rounded-5"
+            //   onClick={() => handleDeleteAll(dataProduct.id)}
+            // >
+            //   <i
+            //     className="bi bi-cart-check-fill text-success"
+            //     style={{ height: "60px ", width: "60px", fontSize: "30px" }}
+            //   ></i>
+            // </Link>
+            <div
+              className="light d-flex border border-success justify-content-evenly align-items-center rounded-5 p-1"
+              style={{ width: "100px", height: "35px" }}
+            >
+              {dataProduct.quantiy === 1 ? (
+                <button
+                  className="btn  p-0"
+                  onClick={() => handleDelete(dataProduct.id)}
+                >
+                  <i className="bi bi-trash-fill text-danger"></i>
+                </button>
+              ) : (
+                <button
+                  className="bot rounded-circle text-danger"
+                  onClick={() => handleDelete(dataProduct.id)}
+                >
+                  -
+                </button>
+              )}
+              <span>{dataProduct.quantiy}</span>
+
+              <button
+                className="bot rounded-circle  text-success"
+                onClick={() => handleAdd(dataProduct.id)}
+              >
+                +
+              </button>
+            </div>
           ) : (
-            <Link className=" btn  " onClick={() => handleShow(dataProduct.id)}>
+            <Link
+              className=" btn text-dark light rounded-5"
+              onClick={() => handleShow(dataProduct.id)}
+            >
               <i
                 className="bi bi-cart-check"
                 style={{ height: "60px ", width: "60px", fontSize: "30px" }}
@@ -48,44 +116,60 @@ export default function Productdetails() {
           )}
           {dataProduct.favorite ? (
             <FavriteIcon
-              style={{ width: "25px", height: "25px" }}
-              className={`btn text-danger  p-0  me-5 end-0 position-absolute end-0`}
-              onClick={() => handlefavorite(dataProduct.id)}
+              style={{
+                height: "60px ",
+                width: "60px",
+                fontSize: "30px",
+                border: "none",
+                paddingTop: "10px",
+              }}
+              className={`btn text-danger   `}
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                handlefavorite(dataProduct.id);
+              }}
             />
           ) : (
             <i
-              style={{ width: "25px", height: "25px" }}
-              class={`bi bi-heart icons btn text-dark  p-0  me-5  position-absolute end-0 `}
-              onClick={() => handlefavorite(dataProduct.id)}
+              style={{
+                height: "60px ",
+                width: "60px",
+                fontSize: "28px",
+                border: "none",
+                paddingTop: "12px",
+              }}
+              className={` bi bi-heart icons btn align-center  `}
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                handlefavorite(dataProduct.id);
+              }}
             ></i>
           )}
-
-          <p>Details: {dataProduct.description}</p>
-
-          <h6>Price: {dataProduct.price} $</h6>
         </div>
-        {showAlert.cart === true ? (
-          <div className=" position-fixed bottom-0 end-0 m-4">
-            <AlertAddToCart massage={"add to cart"} />
-          </div>
-        ) : (
-          ""
-        )}
-        {showAlert.favorite === true ? (
-          <div className=" position-fixed bottom-0 end-0 m-4">
-            <AlertAddToCart massage={"add to favorite"} />
-          </div>
-        ) : (
-          ""
-        )}
-        {removeAlert.favorite === true ? (
-          <div className=" position-fixed bottom-0 end-0 m-4">
-            <AlertAddToCart massage={"remove from favorite"} />
-          </div>
-        ) : (
-          ""
-        )}
       </div>
-    
+      {showAlert.cart === true ? (
+        <div className=" position-fixed bottom-0 end-0 m-4">
+          <AlertAddToCart massage={"add to cart"} />
+        </div>
+      ) : (
+        ""
+      )}
+      {showAlert.favorite === true ? (
+        <div className=" position-fixed bottom-0 end-0 m-4">
+          <AlertAddToCart massage={"add to favorite"} />
+        </div>
+      ) : (
+        ""
+      )}
+      {removeAlert.favorite === true ? (
+        <div className=" position-fixed bottom-0 end-0 m-4">
+          <AlertAddToCart massage={"remove from favorite"} />
+        </div>
+      ) : (
+        ""
+      )}
+    </div>
   );
 }

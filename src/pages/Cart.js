@@ -4,20 +4,11 @@ import ProductContext from "../context/cearteContext";
 
 
 export default function Cart() {
-  const { product, setproduct} = useContext(ProductContext);
+  const { product,handleDeleteAll,handleAdd,handleDelete} = useContext(ProductContext);
 
   console.log(product);
 
-  function handleDeleteAll(id) {
-    const prev = product.map((i) =>
-      i.id === id ? { ...i, cart: false, quantiy: 0 } : i,
-    );
-
-    setproduct(prev);
-    localStorage.setItem("products", JSON.stringify(prev));
-
-  }
-
+  
 
 
   const list = product.filter((e) => e.cart === true).map((e) => e.price * e.quantiy);
@@ -25,32 +16,7 @@ export default function Cart() {
 
   const total = list.reduce((acc, item) => acc + item, 0);
 
-  function handleDelete(id) {
-    const prev = product.map((i) =>
-      i.id === id
-        ? {
-            ...i,
-            quantiy: i.quantiy > 0 ? i.quantiy - 1 : 0,
-            cart: i.quantiy === 1 ? false : true,
-          }
-        : i,
-    );
-    setproduct(prev);
-    localStorage.setItem("products", JSON.stringify(prev));
-  }
-  function handleAdd(id) {
-    const prev = product.map((i) =>
-      i.id === id
-        ? {
-            ...i,
-            quantiy: i.quantiy + 1,
-            
-          }
-        : i,
-    );
-    setproduct(prev);
-    localStorage.setItem("products", JSON.stringify(prev));
-  }
+  
 
   const table = product.filter((e) =>
     e.cart ===true).map((e ,index) =>
@@ -62,21 +28,32 @@ export default function Cart() {
 
         <td >{e.price} $</td>
         <td>
-          <div className='d-flex justify-content-center' >
-          <button
-            className="btn fonts text-danger "
-            onClick={() => handleDelete(e.id)}
-          >
-            -
-          </button>
-          <p className="p-2 mb-0 w-25 align-self-center">{e.quantiy}</p>
-          <button
-            className="btn fonts text-success "
-            onClick={() => handleAdd(e.id)}
-          >
-            +
-          </button>
-          </div>
+          <div className='d-flex justify-content-center align-items-center' >
+          {e.quantiy === 1 ? (
+                <button
+                  className="btn  p-0"
+                  onClick={() => handleDelete(e.id)}
+                >
+                  <i className="bi bi-trash-fill text-danger"></i>
+                </button>
+              ) : (
+                <button
+                  className="bot rounded-circle text-danger"
+                  onClick={() => handleDelete(e.id)}
+                >
+                  -
+                </button>
+              )}
+              <p className="m-0 w-25">{e.quantiy}</p>
+
+              <button
+                className="bot rounded-circle  text-success"
+                onClick={() => handleAdd(e.id)}
+              >
+                +
+              </button>
+            </div>
+          
         </td>
         <td>{(e.price * e.quantiy).toFixed(2)} $</td>
         <td>
@@ -100,9 +77,9 @@ if (countCart  > 0) {
       style={{ minHeight: "80vh"}}
     >
       <h1 className="d-flex justify-content-center">Cart</h1>
-      <div style={{ overflowX: "auto" }}>
+      <div style={{ overflowX: "auto" }} className="">
       <table
-        className="col-12 container text-center table table-bordered mb-5"
+        className="col-12  shadow container text-center table table-bordered mb-5"
         style={{ minWidth: "720px" }}
       >
         <thead>

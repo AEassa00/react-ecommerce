@@ -25,10 +25,28 @@ console.log(search)
       setproduct(JSON.parse(saved))
     }
     else{
-  fetch('https://fakestoreapi.com/products')
-  .then(response => response.json())
-  .then(data =>{ setproduct(data)
-  localStorage.setItem("products", JSON.stringify(data))})
+   
+    Promise.all([
+      fetch("https://dummyjson.com/products/category/smartphones").then((res) =>
+        res.json(),
+      ),
+      fetch("https://dummyjson.com/products/category/laptops").then((res) =>
+        res.json(),
+      ),
+      fetch("https://dummyjson.com/products/category/tablets").then((res) =>
+        res.json(),
+      ),
+      fetch("https://dummyjson.com/products/category/mobile-accessories").then((res) =>
+        res.json(),
+      ),
+    ])
+      .then(([phones, laptops, tablets, accessories]) => {
+        const productapi=[...phones.products, ...laptops.products, ...tablets.products, ...accessories.products]
+        setproduct(productapi);
+        localStorage.setItem("products", JSON.stringify(productapi));
+      })
+      .catch((err) => console.log(err));
+  
 }},[])
   
    
@@ -88,12 +106,10 @@ console.log(search)
       }
     })
     
-
-    
-    
-    
-    
   }
+
+
+  //function in cart
   function handleDeleteAll(id) {
       const prev = product.map((i) =>
         i.id === id ? { ...i, cart: false, quantiy: 0 } : i,
@@ -102,6 +118,32 @@ console.log(search)
       setproduct(prev);
       localStorage.setItem("products", JSON.stringify(prev));
   
+    }
+
+    function handleDelete(id) {
+      const prev = product.map((i) =>
+        i.id === id
+          ? {
+              ...i,
+              quantiy: i.quantiy > 0 ? i.quantiy - 1 : 0,
+              cart: i.quantiy === 1 ? false : true,
+            }
+          : i,
+      );
+      setproduct(prev);
+      localStorage.setItem("products", JSON.stringify(prev));
+    }
+    function handleAdd(id) {
+      const prev = product.map((i) =>
+        i.id === id
+          ? {
+              ...i,
+              quantiy: i.quantiy + 1,
+            }
+          : i,
+      );
+      setproduct(prev);
+      localStorage.setItem("products", JSON.stringify(prev));
     }
   
   
@@ -121,6 +163,8 @@ console.log(search)
         search,
         setSearch,
         handleDeleteAll,
+        handleAdd,
+        handleDelete
       }}
       
     >

@@ -37,23 +37,21 @@ export default function Login() {
       <h6 style={{ marginBottom: "-12px" }}>Abdallah</h6>
       <p className="m-0">commerce</p>
       <h1>Log in</h1>
-      <form className="d-flex gap-2 flex-column w-50" onSubmit={submit}>
-        <label>Email</label>
-        <TextField
+      <form className="d-flex gap-4 flex-column w-50" onSubmit={submit}>
+        <TextField className="input-field"
+        label="Email"
           value={input.email}
           onChange={(e) => setInput({ ...input, email: e.target.value })}
           type="email"
-          placeholder="Email"
         />
         {input.email === "" && accept && (
           <span className="text-danger">Email is required</span>
         )}
-        <label>Password</label>
-        <TextField
+        <TextField className="input-field"
+          label="Password"
           value={input.password}
           onChange={(e) => setInput({ ...input, password: e.target.value })}
           type="password"
-          placeholder="Password"
         />
         {input.password.length < 6 && accept && (
           <span className="text-danger">

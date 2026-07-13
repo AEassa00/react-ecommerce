@@ -9,6 +9,7 @@ import Signin from "../pages/Signin";
 import MainLayout from "../component/MainLayout";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
+import "../css/style.css";
 
 export default function AppRoutes() {
   return (
